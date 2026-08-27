@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prototipe Audio-Visual — Bahasa Arab Kelas XI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F0DE;
+    --paper-dark:#EFE6C9;
+    --ink:#22303A;
+    --ink-soft:#5A6670;
+    --teal:#12433F;
+    --teal-light:#1E5C56;
+    --gold:#A9812E;
+    --gold-light:#D8BE7C;
+    --brick:#8B4A34;
+    --brick-light:#F1E1D6;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--teal);
+    background-image:radial-gradient(circle at 20% 10%, #17524C 0%, #0E3733 60%, #0A2B27 100%);
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    min-height:100vh;
+    padding:32px 16px 64px;
+  }
+  .wrap{max-width:900px;margin:0 auto;}
+  .masthead{
+    text-align:center;
+    color:var(--paper);
+    margin-bottom:28px;
+  }
+  .masthead .eyebrow{
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold-light);
+    margin:0 0 6px;
+  }
+  .masthead h1{
+    font-family:'Lora',serif;
+    font-weight:600;
+    font-size:28px;
+    margin:0 0 4px;
+  }
+  .masthead .ar-title{
+    font-family:'Amiri',serif;
+    font-size:26px;
+    color:var(--gold-light);
+    direction:rtl;
+    margin:0;
+  }
+  .tema-tabs{
+    display:flex;
+    gap:6px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+  }
+  .tema-tab{
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    font-weight:500;
+    color:var(--paper);
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(216,190,124,0.35);
+    border-radius:10px 10px 0 0;
+    padding:10px 18px 12px;
+    cursor:pointer;
+    transition:background .15s;
+  }
+  .tema-tab:hover{background:rgba(255,255,255,0.16);}
+  .tema-tab.active{
+    background:var(--paper);
+    color:var(--teal);
+    border-color:var(--paper);
+    font-weight:600;
+  }
+  .page-card{
+    background:var(--paper);
+    border-radius:6px;
+    padding:34px 30px 26px;
+    position:relative;
+    box-shadow:0 20px 50px rgba(0,0,0,.35);
+  }
+  .ornament-rule{
+    height:6px;
+    border-top:2px solid var(--gold);
+    border-bottom:1px solid var(--gold);
+    margin-bottom:22px;
+  }
+  .ornament-rule.bottom{margin-top:26px;margin-bottom:0;}
+  .tema-heading{
+    text-align:center;
+    margin-bottom:18px;
+  }
+  .tema-heading h2{
+    font-family:'Lora',serif;
+    font-size:15px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:0 0 2px;
+  }
+  .tema-heading .ar{
+    font-family:'Amiri',serif;
+    font-size:30px;
+    color:var(--teal);
+    direction:rtl;
+  }
+  .subtema-rail{
+    display:flex;
+    gap:8px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-bottom:24px;
+  }
+  .subtema-btn{
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    font-weight:500;
+    color:var(--teal);
+    background:var(--paper-dark);
+    border:1px solid var(--gold);
+    border-radius:20px;
+    padding:8px 16px;
+    cursor:pointer;
+  }
+  .subtema-btn.active{
+    background:var(--teal);
+    color:var(--paper);
+    border-color:var(--teal);
+  }
+  .voice-notice{
+    font-size:12px;
+    color:var(--ink-soft);
+    text-align:center;
+    margin-bottom:18px;
+  }
+  .vocab-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:14px;
+  }
+  .vocab-card{
+    background:#fff;
+    border:1px solid rgba(169,129,46,0.35);
+    border-radius:10px;
+    padding:16px 14px;
+    text-align:center;
+  }
+  .vocab-card .ar{
+    font-family:'Amiri',serif;
+    font-size:24px;
+    color:var(--teal);
+    direction:rtl;
+    margin-bottom:6px;
+  }
+  .vocab-card .id{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin-bottom:10px;
+  }
+  .play-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    width:36px;height:36px;
+    border-radius:50%;
+    border:1.5px solid var(--gold);
+    background:var(--paper);
+    color:var(--teal);
+    cursor:pointer;
+    font-size:14px;
+  }
+  .play-btn:hover{background:var(--gold-light);}
+  .play-btn.playing{background:var(--teal);color:var(--paper);border-color:var(--teal);}
+  .play-line{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    height:30px;padding:0 12px;
+    border-radius:15px;
+    border:1.5px solid var(--gold);
+    background:var(--paper);
+    color:var(--teal);
+    cursor:pointer;
+    font-size:12px;
+    font-weight:500;
+    white-space:nowrap;
+  }
+  .play-line:hover{background:var(--gold-light);}
+  .play-line.playing{background:var(--teal);color:var(--paper);border-color:var(--teal);}
+  .dialog-line{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    background:#fff;
+    border:1px solid rgba(169,129,46,0.25);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:10px;
+  }
+  .dialog-line .content{flex:1;min-width:0;}
+  .dialog-line .speaker{
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--brick);
+    margin-bottom:5px;
+  }
+  .dialog-line .ar{
+    font-family:'Amiri',serif;
+    font-size:21px;
+    color:var(--ink);
+    direction:rtl;
+    text-align:right;
+    margin-bottom:6px;
+    line-height:1.6;
+  }
+  .dialog-line .id{
+    font-family:'Lora',serif;
+    font-style:italic;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .qiraah-para{
+    background:#fff;
+    border:1px solid rgba(169,129,46,0.25);
+    border-radius:10px;
+    padding:16px 18px;
+    margin-bottom:10px;
+  }
+  .qiraah-para .ar{
+    font-family:'Amiri',serif;
+    font-size:22px;
+    direction:rtl;
+    text-align:right;
+    color:var(--ink);
+    line-height:1.75;
+    margin-bottom:6px;
+  }
+  .qiraah-para .id{
+    font-family:'Lora',serif;
+    font-style:italic;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .toolbar{
+    display:flex;
+    justify-content:center;
+    margin-bottom:16px;
+  }
+  .toolbar .play-line{padding:0 18px;height:34px;font-size:13px;}
+  .footer-note{
+    text-align:center;
+    color:rgba(255,255,255,.55);
+    font-size:12px;
+    margin-top:20px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <p class="eyebrow">Buku Siswa · Bahasa Arab MA Kelas XII</p>
+    <h1>Prototipe Audio-Visual Pembelajaran</h1>
+    <p class="ar-title">اللُّغَةُ العَرَبِيَّةُ لِلصَّفِّ الثَّانِيَ عَشَرَ</p>
+  </div>
+
+  <div class="tema-tabs" id="temaTabs"></div>
+
+  <div class="page-card">
+    <div class="ornament-rule"></div>
+    <div class="tema-heading" id="temaHeading"></div>
+    <div class="subtema-rail" id="subtemaRail"></div>
+    <div class="voice-notice" id="voiceNotice"></div>
+    <div id="content"></div>
+    <div class="ornament-rule bottom"></div>
+  </div>
+
+  <div style="text-align:center;margin-top:18px;">
+    <a href="docs/Skrip_Audio_Bahasa_Arab_Kelas_12.docx" download
+       style="display:inline-flex;align-items:center;gap:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:var(--teal);background:var(--paper);border:1.5px solid var(--gold);border-radius:20px;padding:10px 20px;text-decoration:none;">
+       ⬇ Unduh Naskah Skrip Audio (.docx)
+    </a>
+  </div>
+
+  <p class="footer-note">Prototipe ini menggunakan suara sintesis bawaan peramban (Web Speech API) untuk memutar teks Arab. Untuk hasil terbaik, gunakan Google Chrome dan pastikan koneksi internet aktif agar suara Arab tersedia.</p>
+</div>
+
+<script>
+const DATA = [
+  {
+    title: "Teknologi Informasi dan Komunikasi", arTitle: "تِكْنُولُوجْيَا الْإِعْلَامِ وَالِاتِّصَالِ",
+    mufradat: [
+      {ar:'اَلْحَاسُوبُ', id:'Komputer'},
+      {ar:'اَلْهَاتِفُ الذَّكِيُّ', id:'Telepon pintar / smartphone'},
+      {ar:'اَلْإِنْتَرْنِتُ', id:'Internet'},
+      {ar:'اَلْبَرِيدُ الْإِلِكْتُرُونِيُّ', id:'Surel / email'},
+      {ar:'وَسَائِلُ التَّوَاصُلِ الِاجْتِمَاعِيِّ', id:'Media sosial'},
+      {ar:'اَلتَّطْبِيقُ', id:'Aplikasi'},
+      {ar:'اَلشَّبَكَةُ', id:'Jaringan'},
+      {ar:'كَلِمَةُ الْمُرُورِ', id:'Kata sandi'},
+      {ar:'اَلْمَلَفُّ', id:'Berkas / file'},
+      {ar:'اَلشَّاشَةُ', id:'Layar'},
+    ],
+    hiwar1: {label:'فَوَائِدُ الْإِنْتَرْنِتِ (Manfaat Internet)', lines:[
+      {sp:'AHMAD', ar:'هَلْ تَسْتَخْدِمُ الْإِنْتَرْنِتَ كَثِيرًا يَا سَعِيدُ؟', id:'Apakah kamu banyak memakai internet, Sa\'id?'},
+      {sp:'SAID', ar:'نَعَمْ، الْإِنْتَرْنِتُ أَسْهَلُ وَأَسْرَعُ وَسِيلَةٍ لِلْحُصُولِ عَلَى الْمَعْلُومَاتِ.', id:'Ya, internet adalah sarana yang paling mudah dan tercepat untuk mendapatkan informasi.'},
+      {sp:'AHMAD', ar:'صَحِيحٌ، وَلَكِنْ يَجِبُ أَنْ نَسْتَخْدِمَهُ بِحِكْمَةٍ.', id:'Betul, tapi kita harus menggunakannya dengan bijak.'},
+      {sp:'SAID', ar:'أُوَافِقُكَ، فَالتَّطْبِيقَاتُ التَّعْلِيمِيَّةُ أَفْضَلُ مِنْ إِضَاعَةِ الْوَقْتِ فِي وَسَائِلِ التَّوَاصُلِ فَقَطْ.', id:'Saya setuju, aplikasi pendidikan lebih baik daripada membuang waktu di media sosial saja.'},
+      {sp:'AHMAD', ar:'تَمَامًا، يَجِبُ أَنْ نُوَازِنَ بَيْنَ الِاسْتِخْدَامِ الْمُفِيدِ وَالتَّرْفِيهِ.', id:'Betul sekali, kita harus menyeimbangkan penggunaan yang bermanfaat dan hiburan.'},
+    ]},
+    hiwar2: {label:'حِمَايَةُ الْبَيَانَاتِ الشَّخْصِيَّةِ (Melindungi Data Pribadi)', lines:[
+      {sp:'GURU', ar:'هَلْ تَعْرِفُونَ كَيْفَ تَحْمُونَ حِسَابَاتِكُمُ الْإِلِكْتُرُونِيَّةَ؟', id:'Apakah kalian tahu cara melindungi akun elektronik kalian?'},
+      {sp:'NUR', ar:'نَعَمْ يَا أُسْتَاذَةُ، يَجِبُ أَنْ نَجْعَلَ كَلِمَةَ الْمُرُورِ قَوِيَّةً وَلَا نُشَارِكَهَا مَعَ أَحَدٍ.', id:'Ya Bu Guru, kita harus membuat kata sandi yang kuat dan tidak membagikannya kepada siapa pun.'},
+      {sp:'GURU', ar:'أَحْسَنْتِ! وَمَاذَا أَيْضًا؟', id:'Bagus! Apa lagi?'},
+      {sp:'NUR', ar:'يَجِبُ أَلَّا نَنْقُرَ عَلَى رَوَابِطَ مَشْبُوهَةٍ فِي الْبَرِيدِ الْإِلِكْتُرُونِيِّ.', id:'Kita tidak boleh mengklik tautan mencurigakan di email.'},
+      {sp:'GURU', ar:'مُمْتَازٌ، الْحَذَرُ خَيْرٌ مِنَ النَّدَمِ.', id:'Bagus sekali, kehati-hatian lebih baik daripada penyesalan.'},
+    ]},
+    qiraah: {label:'تَطَوُّرُ تِكْنُولُوجْيَا الِاتِّصَالِ', paras:[
+      {ar:'شَهِدَ الْعَالَمُ فِي الْعُقُودِ الْأَخِيرَةِ تَطَوُّرًا كَبِيرًا فِي تِكْنُولُوجْيَا الْمَعْلُومَاتِ وَالِاتِّصَالِ.', id:'Dunia menyaksikan perkembangan besar dalam teknologi informasi dan komunikasi pada dekade-dekade terakhir.'},
+      {ar:'أَصْبَحَ الْهَاتِفُ الذَّكِيُّ أَدَاةً لَا غِنَى عَنْهَا فِي حَيَاةِ النَّاسِ الْيَوْمِيَّةِ.', id:'Telepon pintar menjadi alat yang tak tergantikan dalam kehidupan sehari-hari manusia.'},
+      {ar:'وَمِنَ الْوَاضِحِ أَنَّ التَّعَلُّمَ عَبْرَ الْإِنْتَرْنِتِ أَصْبَحَ أَكْثَرَ انْتِشَارًا مِنَ التَّعَلُّمِ التَّقْلِيدِيِّ وَحْدَهُ.', id:'Jelas bahwa pembelajaran daring menjadi lebih tersebar luas dibanding pembelajaran konvensional saja.'},
+      {ar:'وَمَعَ ذَلِكَ، يَرَى بَعْضُ الْخُبَرَاءِ أَنَّ الِاسْتِخْدَامَ الْمُفْرِطَ لِوَسَائِلِ التَّوَاصُلِ الِاجْتِمَاعِيِّ قَدْ يَكُونُ أَكْثَرَ ضَرَرًا مِنْ نَفْعِهِ إِذَا لَمْ يُسْتَخْدَمْ بِوَعْيٍ.', id:'Namun, sebagian pakar berpendapat bahwa penggunaan media sosial yang berlebihan bisa lebih banyak mudaratnya daripada manfaatnya jika tidak digunakan dengan sadar.'},
+      {ar:'لِذَلِكَ، يَنْبَغِي عَلَيْنَا أَنْ نَسْتَفِيدَ مِنَ التِّكْنُولُوجْيَا بِمَسْؤُولِيَّةٍ لِتَحْقِيقِ أَكْبَرِ فَائِدَةٍ مُمْكِنَةٍ.', id:'Oleh karena itu, kita harus memanfaatkan teknologi secara bertanggung jawab untuk mencapai manfaat sebesar mungkin.'},
+    ]}
+  },
+  {
+    title: "Tokoh-tokoh Besar Islam", arTitle: "عُظَمَاءُ الْإِسْلَامِ",
+    mufradat: [
+      {ar:'اَلْعَالِمُ', id:'Ulama / ilmuwan'},
+      {ar:'اَلْمُخْتَرِعُ', id:'Penemu'},
+      {ar:'اَلْخَلِيفَةُ', id:'Khalifah'},
+      {ar:'اَلْإِنْجَازُ', id:'Pencapaian / prestasi'},
+      {ar:'اَلْمُؤَلَّفُ', id:'Karya tulis'},
+      {ar:'اَلْحِكْمَةُ', id:'Hikmah / kebijaksanaan'},
+      {ar:'اَلْفَقِيهُ', id:'Ahli fikih'},
+      {ar:'اَلْمُكْتَشِفُ', id:'Penemu (dalam sains)'},
+      {ar:'اَلْقُدْوَةُ', id:'Teladan'},
+      {ar:'اَلتُّرَاثُ', id:'Warisan (ilmu/budaya)'},
+    ],
+    hiwar1: {label:'عَنِ ابْنِ سِينَا (Tentang Ibnu Sina)', lines:[
+      {sp:'GURU', ar:'مَنْ يَعْرِفُ مَنْ هُوَ ابْنُ سِينَا؟', id:'Siapa yang tahu siapa Ibnu Sina?'},
+      {sp:'FAISAL', ar:'هُوَ عَالِمٌ مُسْلِمٌ مَشْهُورٌ فِي الطِّبِّ وَالْفَلْسَفَةِ.', id:'Beliau adalah ilmuwan muslim terkenal di bidang kedokteran dan filsafat.'},
+      {sp:'GURU', ar:'صَحِيحٌ! وَمَا هُوَ أَشْهَرُ كِتَابٍ لَهُ؟', id:'Betul! Apa buku beliau yang paling terkenal?'},
+      {sp:'FAISAL', ar:'كِتَابُ «الْقَانُونِ فِي الطِّبِّ»، وَهُوَ أَحَدُ أَهَمِّ الْكُتُبِ الطِّبِّيَّةِ فِي التَّارِيخِ.', id:'Kitab \'Al-Qanun fi At-Tibb\', salah satu buku kedokteran terpenting dalam sejarah.'},
+      {sp:'GURU', ar:'أَحْسَنْتَ، لَقَدْ كَانَ عِلْمُهُ أَوْسَعَ مِنْ عُلَمَاءَ كَثِيرِينَ فِي عَصْرِهِ.', id:'Bagus, ilmu beliau memang lebih luas dibanding banyak ulama di zamannya.'},
+    ]},
+    hiwar2: {label:'عَنِ الْخَوَارِزْمِيِّ (Tentang Al-Khawarizmi)', lines:[
+      {sp:'SALMA', ar:'هَلْ سَمِعْتِ عَنِ الْخَوَارِزْمِيِّ يَا هُدَى؟', id:'Apakah kamu pernah dengar tentang Al-Khawarizmi, Huda?'},
+      {sp:'HUDA', ar:'نَعَمْ، هُوَ عَالِمُ الرِّيَاضِيَّاتِ الَّذِي اخْتَرَعَ عِلْمَ الْجَبْرِ.', id:'Ya, beliau ahli matematika yang menemukan ilmu aljabar.'},
+      {sp:'SALMA', ar:'وَاسْمُهُ هُوَ أَصْلُ كَلِمَةِ «algorithm» فِي اللُّغَاتِ الْأُورُوبِّيَّةِ.', id:'Dan namanya adalah asal kata \'algorithm\' dalam bahasa-bahasa Eropa.'},
+      {sp:'HUDA', ar:'هَذَا مُذْهِلٌ! إِنْجَازَاتُهُ أَكْثَرُ تَأْثِيرًا مِمَّا نَتَخَيَّلُ.', id:'Menakjubkan! Pencapaiannya lebih berpengaruh dari yang kita bayangkan.'},
+    ]},
+    qiraah: {label:'اِبْنُ سِينَا، طَبِيبُ الْأَطِبَّاءِ', paras:[
+      {ar:'وُلِدَ ابْنُ سِينَا فِي بِلَادِ مَا وَرَاءَ النَّهْرِ فِي الْقَرْنِ الْعَاشِرِ الْمِيلَادِيِّ.', id:'Ibnu Sina lahir di wilayah Transoxiana pada abad ke-10 Masehi.'},
+      {ar:'حَفِظَ الْقُرْآنَ الْكَرِيمَ وَهُوَ صَغِيرٌ، ثُمَّ تَعَلَّمَ الطِّبَّ وَالْفَلْسَفَةَ وَالرِّيَاضِيَّاتِ.', id:'Beliau menghafal Al-Qur\'an sejak kecil, lalu belajar kedokteran, filsafat, dan matematika.'},
+      {ar:'أَلَّفَ كِتَابَ «الْقَانُونِ فِي الطِّبِّ» الَّذِي بَقِيَ مَرْجِعًا أَسَاسِيًّا فِي الْجَامِعَاتِ الْأُورُوبِّيَّةِ لِقُرُونٍ طَوِيلَةٍ.', id:'Beliau menulis kitab \'Al-Qanun fi At-Tibb\' yang tetap menjadi rujukan utama di universitas-universitas Eropa selama berabad-abad.'},
+      {ar:'يَعُدُّهُ كَثِيرٌ مِنَ الْمُؤَرِّخِينَ أَعْظَمَ طَبِيبٍ فِي الْعُصُورِ الْوُسْطَى، وَأَكْثَرَ عُلَمَاءِ عَصْرِهِ تَأْثِيرًا فِي الْعُلُومِ الطِّبِّيَّةِ.', id:'Banyak sejarawan menganggapnya sebagai dokter terbesar di abad pertengahan, dan ilmuwan zamannya yang paling berpengaruh dalam ilmu kedokteran.'},
+      {ar:'تُعَلِّمُنَا سِيرَتُهُ أَنَّ الِاجْتِهَادَ وَحُبَّ الْعِلْمِ يُمْكِنُ أَنْ يَصْنَعَا عَالِمًا يَبْقَى أَثَرُهُ خَالِدًا.', id:'Kisah hidupnya mengajarkan kita bahwa kesungguhan dan cinta ilmu dapat melahirkan seorang ilmuwan yang jejaknya abadi.'},
+    ]}
+  },
+  {
+    title: "Studi di Universitas", arTitle: "اَلدِّرَاسَةُ فِي الْجَامِعَةِ",
+    mufradat: [
+      {ar:'اَلْجَامِعَةُ', id:'Universitas'},
+      {ar:'اَلْكُلِّيَّةُ', id:'Fakultas'},
+      {ar:'اَلتَّخَصُّصُ', id:'Jurusan / spesialisasi'},
+      {ar:'اَلْمُحَاضَرَةُ', id:'Kuliah / perkuliahan'},
+      {ar:'اَلْأُسْتَاذُ الْجَامِعِيُّ', id:'Dosen'},
+      {ar:'اَلشَّهَادَةُ', id:'Ijazah / gelar'},
+      {ar:'اَلْمِنْحَةُ الدِّرَاسِيَّةُ', id:'Beasiswa'},
+      {ar:'اَلْبَحْثُ الْعِلْمِيُّ', id:'Penelitian ilmiah'},
+      {ar:'اَلتَّسْجِيلُ', id:'Pendaftaran'},
+      {ar:'اَلْفَصْلُ الدِّرَاسِيُّ', id:'Semester'},
+    ],
+    hiwar1: {label:'اِخْتِيَارُ التَّخَصُّصِ (Memilih Jurusan)', lines:[
+      {sp:'AYAH', ar:'مَاذَا تُرِيدُ أَنْ تَدْرُسَ فِي الْجَامِعَةِ يَا وَلَدِي؟', id:'Apa yang ingin kamu pelajari di universitas, Nak?'},
+      {sp:'RASYID', ar:'أُفَكِّرُ فِي التَّخَصُّصِ فِي هَنْدَسَةِ الْحَاسُوبِ.', id:'Saya sedang mempertimbangkan jurusan teknik komputer.'},
+      {sp:'AYAH', ar:'لِمَاذَا اخْتَرْتَ هَذَا التَّخَصُّصَ؟', id:'Mengapa kamu memilih jurusan ini?'},
+      {sp:'RASYID', ar:'لِأَنَّهُ أَكْثَرُ طَلَبًا فِي سُوقِ الْعَمَلِ، وَأَنَا أُحِبُّ الْبَرْمَجَةَ.', id:'Karena lebih banyak diminati di pasar kerja, dan saya suka pemrograman.'},
+      {sp:'AYAH', ar:'فِكْرَةٌ مُمْتَازَةٌ، اِخْتِيَارُ التَّخَصُّصِ الْمُنَاسِبِ أَهَمُّ خُطْوَةٍ فِي مُسْتَقْبَلِكَ.', id:'Ide yang bagus, memilih jurusan yang tepat adalah langkah terpenting bagi masa depanmu.'},
+    ]},
+    hiwar2: {label:'التَّسْجِيلُ وَالْمِنْحَةُ الدِّرَاسِيَّةُ (Pendaftaran dan Beasiswa)', lines:[
+      {sp:'PETUGAS', ar:'هَلْ لَدَيْكِ كُلُّ الْمُسْتَنَدَاتِ الْمَطْلُوبَةِ لِلتَّسْجِيلِ؟', id:'Apakah kamu sudah punya semua dokumen yang diperlukan untuk pendaftaran?'},
+      {sp:'ZAINAB', ar:'نَعَمْ، وَأُرِيدُ أَيْضًا أَنْ أَسْأَلَ عَنِ الْمِنَحِ الدِّرَاسِيَّةِ الْمُتَاحَةِ.', id:'Ya, dan saya juga ingin bertanya tentang beasiswa yang tersedia.'},
+      {sp:'PETUGAS', ar:'لَدَيْنَا مِنْحَةٌ لِلطُّلَّابِ الْمُتَفَوِّقِينَ أَكَادِيمِيًّا.', id:'Kami memiliki beasiswa untuk mahasiswa berprestasi akademik.'},
+      {sp:'ZAINAB', ar:'هَلْ شُرُوطُهَا صَعْبَةٌ؟', id:'Apakah syaratnya sulit?'},
+      {sp:'PETUGAS', ar:'لَا، وَلَكِنَّهَا تَتَطَلَّبُ مُعَدَّلًا أَعْلَى مِنْ 85 بِالْمِئَةِ.', id:'Tidak, tapi mensyaratkan nilai rata-rata di atas 85 persen.'},
+    ]},
+    qiraah: {label:'أَهَمِّيَّةُ التَّعْلِيمِ الْجَامِعِيِّ', paras:[
+      {ar:'يُعَدُّ التَّعْلِيمُ الْجَامِعِيُّ مَرْحَلَةً مُهِمَّةً فِي حَيَاةِ كُلِّ طَالِبٍ، إِذْ يُتِيحُ لَهُ فُرْصَةَ التَّعَمُّقِ فِي مَجَالٍ عِلْمِيٍّ مُعَيَّنٍ.', id:'Pendidikan tinggi adalah tahap penting dalam kehidupan setiap pelajar, karena memberinya kesempatan mendalami bidang keilmuan tertentu.'},
+      {ar:'تَخْتَلِفُ الْجَامِعَاتُ فِي بَرَامِجِهَا، وَلَكِنَّ الْهَدَفَ وَاحِدٌ: إِعْدَادُ جِيلٍ قَادِرٍ عَلَى الْمُسَاهَمَةِ فِي بِنَاءِ الْمُجْتَمَعِ.', id:'Universitas berbeda-beda programnya, namun tujuannya satu: mempersiapkan generasi yang mampu berkontribusi membangun masyarakat.'},
+      {ar:'يَرَى كَثِيرٌ مِنَ الطُّلَّابِ أَنَّ اخْتِيَارَ التَّخَصُّصِ الْمُنَاسِبِ أَهَمُّ مِنَ اخْتِيَارِ الْجَامِعَةِ نَفْسِهَا.', id:'Banyak mahasiswa berpendapat bahwa memilih jurusan yang tepat lebih penting daripada memilih universitas itu sendiri.'},
+      {ar:'كَمَا أَنَّ الْبَحْثَ الْعِلْمِيَّ وَالْمُشَارَكَةَ فِي الْأَنْشِطَةِ الطُّلَّابِيَّةِ يَجْعَلَانِ التَّجْرِبَةَ الْجَامِعِيَّةَ أَكْثَرَ ثَرَاءً وَفَائِدَةً.', id:'Penelitian ilmiah dan keikutsertaan dalam kegiatan kemahasiswaan menjadikan pengalaman kuliah lebih kaya dan bermanfaat.'},
+    ]}
+  },
+];
+
+let curTema = 0;
+let curSub = 'mufradat';
+let arabicVoice = null;
+
+function initVoices(){
+  function pick(){
+    const voices = speechSynthesis.getVoices();
+    arabicVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ar')) || null;
+    document.getElementById('voiceNotice').textContent = arabicVoice
+      ? 'Suara Arab tersedia: ' + arabicVoice.name
+      : 'Suara Arab bawaan tidak terdeteksi di peramban ini — audio akan memakai suara default. Coba gunakan Google Chrome untuk hasil terbaik.';
+  }
+  pick();
+  speechSynthesis.onvoiceschanged = pick;
+}
+initVoices();
+
+function speak(text, btn){
+  if(!('speechSynthesis' in window)){
+    alert('Peramban ini tidak mendukung text-to-speech.');
+    return;
+  }
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'ar-SA';
+  if(arabicVoice) u.voice = arabicVoice;
+  u.rate = 0.85;
+  if(btn){
+    btn.classList.add('playing');
+    u.onend = () => btn.classList.remove('playing');
+    u.onerror = () => btn.classList.remove('playing');
+  }
+  speechSynthesis.speak(u);
+}
+
+function speakSequence(texts, btn){
+  if(!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  if(btn) btn.classList.add('playing');
+  let i = 0;
+  function next(){
+    if(i >= texts.length){ if(btn) btn.classList.remove('playing'); return; }
+    const u = new SpeechSynthesisUtterance(texts[i]);
+    u.lang = 'ar-SA';
+    if(arabicVoice) u.voice = arabicVoice;
+    u.rate = 0.85;
+    u.onend = next;
+    u.onerror = next;
+    i++;
+    speechSynthesis.speak(u);
+  }
+  next();
+}
+
+function renderTemaTabs(){
+  const el = document.getElementById('temaTabs');
+  el.innerHTML = '';
+  DATA.forEach((t,i)=>{
+    const b = document.createElement('button');
+    b.className = 'tema-tab' + (i===curTema?' active':'');
+    b.textContent = 'Unit ' + (i+1) + ' · ' + t.title;
+    b.onclick = () => { curTema = i; curSub='mufradat'; renderAll(); };
+    el.appendChild(b);
+  });
+}
+
+function renderSubtemaRail(){
+  const el = document.getElementById('subtemaRail');
+  el.innerHTML = '';
+  const tabs = [
+    {key:'mufradat', label:'المفردات · Kosakata'},
+    {key:'hiwar1', label:'الحوار ١ · Hiwar 1'},
+    {key:'hiwar2', label:'الحوار ٢ · Hiwar 2'},
+    {key:'qiraah', label:'القراءة · Bacaan'},
+  ];
+  tabs.forEach(tb=>{
+    const b = document.createElement('button');
+    b.className = 'subtema-btn' + (curSub===tb.key?' active':'');
+    b.textContent = tb.label;
+    b.onclick = () => { curSub = tb.key; renderContent(); };
+    el.appendChild(b);
+  });
+}
+
+function renderHeading(){
+  const t = DATA[curTema];
+  document.getElementById('temaHeading').innerHTML =
+    '<h2>Unit ' + (curTema+1) + ' · ' + t.title + '</h2><div class="ar">' + t.arTitle + '</div>';
+}
+
+function renderContent(){
+  renderSubtemaRail();
+  const t = DATA[curTema];
+  const el = document.getElementById('content');
+  el.innerHTML = '';
+
+  if(curSub === 'mufradat'){
+    const grid = document.createElement('div');
+    grid.className = 'vocab-grid';
+    t.mufradat.forEach(w=>{
+      const card = document.createElement('div');
+      card.className = 'vocab-card';
+      card.innerHTML = '<div class="ar">'+w.ar+'</div><div class="id">'+w.id+'</div>';
+      const btn = document.createElement('button');
+      btn.className = 'play-btn';
+      btn.setAttribute('aria-label','Putar '+w.ar);
+      btn.innerHTML = '<i class="ti ti-player-play" aria-hidden="true">&#9656;</i>';
+      btn.onclick = () => speak(w.ar, btn);
+      card.appendChild(btn);
+      grid.appendChild(card);
+    });
+    el.appendChild(grid);
+  }
+
+  if(curSub === 'hiwar1' || curSub === 'hiwar2'){
+    const h = curSub==='hiwar1' ? t.hiwar1 : t.hiwar2;
+    const toolbar = document.createElement('div');
+    toolbar.className = 'toolbar';
+    const allBtn = document.createElement('button');
+    allBtn.className = 'play-line';
+    allBtn.textContent = '▶ Putar seluruh dialog';
+    allBtn.onclick = () => speakSequence(h.lines.map(l=>l.ar), allBtn);
+    toolbar.appendChild(allBtn);
+    el.appendChild(toolbar);
+
+    h.lines.forEach(l=>{
+      const row = document.createElement('div');
+      row.className = 'dialog-line';
+      const content = document.createElement('div');
+      content.className = 'content';
+      content.innerHTML = '<div class="speaker">'+l.sp+'</div><div class="ar">'+l.ar+'</div><div class="id">'+l.id+'</div>';
+      const btn = document.createElement('button');
+      btn.className = 'play-line';
+      btn.textContent = '▶';
+      btn.setAttribute('aria-label','Putar kalimat '+l.sp);
+      btn.onclick = () => speak(l.ar, btn);
+      row.appendChild(content);
+      row.appendChild(btn);
+      el.appendChild(row);
+    });
+  }
+
+  if(curSub === 'qiraah'){
+    const q = t.qiraah;
+    const toolbar = document.createElement('div');
+    toolbar.className = 'toolbar';
+    const allBtn = document.createElement('button');
+    allBtn.className = 'play-line';
+    allBtn.textContent = '▶ Putar seluruh bacaan';
+    allBtn.onclick = () => speakSequence(q.paras.map(p=>p.ar), allBtn);
+    toolbar.appendChild(allBtn);
+    el.appendChild(toolbar);
+
+    q.paras.forEach(p=>{
+      const row = document.createElement('div');
+      row.className = 'qiraah-para';
+      row.innerHTML = '<div class="ar">'+p.ar+'</div><div class="id">'+p.id+'</div>';
+      const btn = document.createElement('button');
+      btn.className = 'play-line';
+      btn.style.marginTop = '8px';
+      btn.textContent = '▶ Putar';
+      btn.onclick = () => speak(p.ar, btn);
+      row.appendChild(btn);
+      el.appendChild(row);
+    });
+  }
+}
+
+function renderAll(){
+  renderTemaTabs();
+  renderHeading();
+  renderContent();
+}
+renderAll();
+</script>
+</body>
+</html>
