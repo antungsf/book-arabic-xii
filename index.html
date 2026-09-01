@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prototipe Audio-Visual — Bahasa Arab Kelas XI</title>
+<title>Prototipe Audio-Visual — Bahasa Arab Kelas XII</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -425,22 +425,53 @@ function initVoices(){
 }
 initVoices();
 
+/* --- PERBAIKAN BUG CHROME DESKTOP ---
+   1) Chrome kadang "membuang" utterance baru kalau speak() dipanggil
+      langsung sesudah cancel() secara synchronous (bug lama, tidak
+      muncul di Chrome Android). Solusi: beri jeda kecil (setTimeout)
+      antara cancel() dan speak().
+   2) Chrome kadang membekukan speechSynthesis kalau tab idle beberapa
+      detik ("paused" secara diam-diam). Solusi: panggil resume()
+      sebelum bicara, dan jalankan keep-alive berkala.
+*/
+let keepAliveTimer = null;
+function startKeepAlive(){
+  stopKeepAlive();
+  keepAliveTimer = setInterval(() => {
+    if(speechSynthesis.speaking){
+      speechSynthesis.pause();
+      speechSynthesis.resume();
+    }
+  }, 10000);
+}
+function stopKeepAlive(){
+  if(keepAliveTimer){ clearInterval(keepAliveTimer); keepAliveTimer = null; }
+}
+
+function makeUtterance(text){
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'ar-SA';
+  if(arabicVoice) u.voice = arabicVoice;
+  u.rate = 0.85;
+  return u;
+}
+
 function speak(text, btn){
   if(!('speechSynthesis' in window)){
     alert('Peramban ini tidak mendukung text-to-speech.');
     return;
   }
   speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'ar-SA';
-  if(arabicVoice) u.voice = arabicVoice;
-  u.rate = 0.85;
-  if(btn){
-    btn.classList.add('playing');
-    u.onend = () => btn.classList.remove('playing');
-    u.onerror = () => btn.classList.remove('playing');
-  }
-  speechSynthesis.speak(u);
+  if(btn) btn.classList.add('playing');
+  // jeda kecil supaya Chrome desktop tidak membuang utterance baru
+  setTimeout(() => {
+    speechSynthesis.resume();
+    const u = makeUtterance(text);
+    u.onstart = () => startKeepAlive();
+    u.onend = () => { stopKeepAlive(); if(btn) btn.classList.remove('playing'); };
+    u.onerror = () => { stopKeepAlive(); if(btn) btn.classList.remove('playing'); };
+    speechSynthesis.speak(u);
+  }, 60);
 }
 
 function speakSequence(texts, btn){
@@ -449,17 +480,23 @@ function speakSequence(texts, btn){
   if(btn) btn.classList.add('playing');
   let i = 0;
   function next(){
-    if(i >= texts.length){ if(btn) btn.classList.remove('playing'); return; }
-    const u = new SpeechSynthesisUtterance(texts[i]);
-    u.lang = 'ar-SA';
-    if(arabicVoice) u.voice = arabicVoice;
-    u.rate = 0.85;
+    if(i >= texts.length){
+      stopKeepAlive();
+      if(btn) btn.classList.remove('playing');
+      return;
+    }
+    const u = makeUtterance(texts[i]);
+    u.onstart = () => startKeepAlive();
     u.onend = next;
     u.onerror = next;
     i++;
     speechSynthesis.speak(u);
   }
-  next();
+  // jeda kecil di awal, sama seperti speak()
+  setTimeout(() => {
+    speechSynthesis.resume();
+    next();
+  }, 60);
 }
 
 function renderTemaTabs(){
