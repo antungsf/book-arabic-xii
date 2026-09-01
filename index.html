@@ -141,7 +141,30 @@
     font-size:12px;
     color:var(--ink-soft);
     text-align:center;
+    margin-bottom:8px;
+  }
+  .voice-select-wrap{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
     margin-bottom:18px;
+    flex-wrap:wrap;
+  }
+  .voice-select-wrap label{
+    font-size:12px;
+    color:var(--ink-soft);
+    font-weight:500;
+  }
+  #voiceSelect{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    color:var(--teal);
+    background:#fff;
+    border:1px solid var(--gold);
+    border-radius:14px;
+    padding:5px 10px;
+    max-width:280px;
   }
   .vocab-grid{
     display:grid;
@@ -284,6 +307,10 @@
     <div class="tema-heading" id="temaHeading"></div>
     <div class="subtema-rail" id="subtemaRail"></div>
     <div class="voice-notice" id="voiceNotice"></div>
+    <div class="voice-select-wrap" id="voiceSelectWrap" style="display:none;">
+      <label for="voiceSelect">🔊 Pilih suara:</label>
+      <select id="voiceSelect"></select>
+    </div>
     <div id="content"></div>
     <div class="ornament-rule bottom"></div>
   </div>
@@ -411,18 +438,72 @@ const DATA = [
 let curTema = 0;
 let curSub = 'mufradat';
 let arabicVoice = null;
+let allArabicVoices = [];
+const VOICE_PREF_KEY = 'bookArabicPreferredVoice';
 
 function initVoices(){
   function pick(){
     const voices = speechSynthesis.getVoices();
-    arabicVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ar')) || null;
-    document.getElementById('voiceNotice').textContent = arabicVoice
-      ? 'Suara Arab tersedia: ' + arabicVoice.name
-      : 'Suara Arab bawaan tidak terdeteksi di peramban ini — audio akan memakai suara default. Coba gunakan Google Chrome untuk hasil terbaik.';
+    allArabicVoices = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith('ar'));
+
+    // coba pakai pilihan tersimpan dari kunjungan sebelumnya
+    let chosen = null;
+    const savedName = localStorage.getItem(VOICE_PREF_KEY);
+    if(savedName){
+      chosen = allArabicVoices.find(v => v.name === savedName) || null;
+    }
+    if(!chosen) chosen = allArabicVoices[0] || null;
+    arabicVoice = chosen;
+
+    renderVoiceSelect();
+    updateVoiceNotice();
   }
   pick();
   speechSynthesis.onvoiceschanged = pick;
 }
+
+function updateVoiceNotice(){
+  const notice = document.getElementById('voiceNotice');
+  if(allArabicVoices.length === 0){
+    notice.textContent = 'Suara Arab bawaan tidak terdeteksi di peramban ini — audio akan memakai suara default. Coba gunakan Google Chrome untuk hasil terbaik.';
+  } else if(allArabicVoices.length === 1){
+    notice.textContent = 'Suara Arab tersedia: ' + allArabicVoices[0].name + ' (hanya satu suara terpasang di perangkat ini).';
+  } else {
+    notice.textContent = 'Tersedia ' + allArabicVoices.length + ' pilihan suara Arab di perangkat ini.';
+  }
+}
+
+function renderVoiceSelect(){
+  const wrap = document.getElementById('voiceSelectWrap');
+  const sel = document.getElementById('voiceSelect');
+  if(allArabicVoices.length <= 1){
+    wrap.style.display = 'none';
+    return;
+  }
+  wrap.style.display = 'flex';
+  sel.innerHTML = '';
+  allArabicVoices.forEach(v=>{
+    const opt = document.createElement('option');
+    opt.value = v.name;
+    opt.textContent = v.name + (v.lang ? ' (' + v.lang + ')' : '');
+    if(arabicVoice && arabicVoice.name === v.name) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const sel = document.getElementById('voiceSelect');
+  if(sel){
+    sel.addEventListener('change', (e) => {
+      const found = allArabicVoices.find(v => v.name === e.target.value);
+      if(found){
+        arabicVoice = found;
+        localStorage.setItem(VOICE_PREF_KEY, found.name);
+      }
+    });
+  }
+});
+
 initVoices();
 
 /* --- PERBAIKAN BUG CHROME DESKTOP ---
