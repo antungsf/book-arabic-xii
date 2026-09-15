@@ -284,6 +284,90 @@
     margin-bottom:16px;
   }
   .toolbar .play-line{padding:0 18px;height:34px;font-size:13px;}
+  .tarkib-title{
+    text-align:center;
+    margin-bottom:18px;
+  }
+  .tarkib-title .ar{
+    font-family:'Amiri',serif;
+    font-size:26px;
+    color:var(--teal);
+    direction:rtl;
+    margin-bottom:4px;
+  }
+  .tarkib-title .id{
+    font-family:'Lora',serif;
+    font-style:italic;
+    font-size:14px;
+    color:var(--ink-soft);
+  }
+  .tarkib-block{
+    background:#fff;
+    border:1px solid rgba(169,129,46,0.25);
+    border-radius:10px;
+    padding:16px 18px;
+    margin-bottom:14px;
+  }
+  .tarkib-block h3{
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:var(--brick);
+    margin:0 0 10px;
+  }
+  .tarkib-def{
+    font-size:14px;
+    line-height:1.7;
+    color:var(--ink);
+    margin-bottom:0;
+  }
+  .tarkib-def .ar-inline{
+    font-family:'Amiri',serif;
+    font-size:17px;
+    direction:rtl;
+    unicode-bidi:embed;
+  }
+  .tarkib-rules{
+    margin:0;
+    padding-left:18px;
+  }
+  .tarkib-rules li{
+    font-size:13.5px;
+    line-height:1.6;
+    color:var(--ink);
+    margin-bottom:8px;
+  }
+  .tarkib-rules li .ar-inline{
+    font-family:'Amiri',serif;
+    font-size:16px;
+    direction:rtl;
+    unicode-bidi:embed;
+  }
+  .tarkib-ex-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:9px 0;
+    border-bottom:1px dashed rgba(169,129,46,0.3);
+  }
+  .tarkib-ex-row:last-child{border-bottom:none;}
+  .tarkib-ex-row .ex-content{flex:1;min-width:0;}
+  .tarkib-ex-row .ar{
+    font-family:'Amiri',serif;
+    font-size:19px;
+    color:var(--ink);
+    direction:rtl;
+    text-align:right;
+    margin-bottom:3px;
+  }
+  .tarkib-ex-row .id{
+    font-family:'Lora',serif;
+    font-style:italic;
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
   .footer-note{
     text-align:center;
     color:rgba(255,255,255,.55);
@@ -361,7 +445,27 @@ const DATA = [
       {ar:'وَمِنَ الْوَاضِحِ أَنَّ التَّعَلُّمَ عَبْرَ الْإِنْتَرْنِتِ أَصْبَحَ أَكْثَرَ انْتِشَارًا مِنَ التَّعَلُّمِ التَّقْلِيدِيِّ وَحْدَهُ.', id:'Jelas bahwa pembelajaran daring menjadi lebih tersebar luas dibanding pembelajaran konvensional saja.'},
       {ar:'وَمَعَ ذَلِكَ، يَرَى بَعْضُ الْخُبَرَاءِ أَنَّ الِاسْتِخْدَامَ الْمُفْرِطَ لِوَسَائِلِ التَّوَاصُلِ الِاجْتِمَاعِيِّ قَدْ يَكُونُ أَكْثَرَ ضَرَرًا مِنْ نَفْعِهِ إِذَا لَمْ يُسْتَخْدَمْ بِوَعْيٍ.', id:'Namun, sebagian pakar berpendapat bahwa penggunaan media sosial yang berlebihan bisa lebih banyak mudaratnya daripada manfaatnya jika tidak digunakan dengan sadar.'},
       {ar:'لِذَلِكَ، يَنْبَغِي عَلَيْنَا أَنْ نَسْتَفِيدَ مِنَ التِّكْنُولُوجْيَا بِمَسْؤُولِيَّةٍ لِتَحْقِيقِ أَكْبَرِ فَائِدَةٍ مُمْكِنَةٍ.', id:'Oleh karena itu, kita harus memanfaatkan teknologi secara bertanggung jawab untuk mencapai manfaat sebesar mungkin.'},
-    ]}
+    ]},
+    tarkib: {
+      arTitle: 'اِسْمُ التَّفْضِيْلِ',
+      idTitle: "Ism at-Tafḍīl (Kata Perbandingan / Superlatif)",
+      definition: "<span class=\"ar-inline\">اِسْمُ التَّفْضِيْلِ</span> adalah kata sifat yang diturunkan dari fi'il, digunakan untuk menyatakan keunggulan suatu benda/orang atas yang lain dalam sifat tertentu. Polanya: <span class=\"ar-inline\">أَفْعَلُ</span> untuk mudzakkar (laki-laki) dan <span class=\"ar-inline\">فُعْلَى</span> untuk mu'annats (perempuan).",
+      rules: [
+        "Syarat kata dasar (fi'il): berupa fi'il tsulatsi (3 huruf asli), fi'il mutasharrif (bisa ditashrif, bukan fi'il jamid), fi'il mabni ma'lum (bukan majhul), fi'il tam (bermakna sempurna, bukan fi'il naqish), dan fi'il yang bisa dibandingkan (bukan pola warna/cacat/perhiasan seperti <span class=\"ar-inline\">أَحْمَر، أَعْوَر، أَشْيَب</span> yang punya pola tersendiri).",
+        "Kondisi 1 — Tajarrud (berdiri sendiri) + diikuti <span class=\"ar-inline\">مِنْ</span>: menunjukkan perbandingan dua hal, contoh <span class=\"ar-inline\">خَالِدٌ أَمْهَرُ مِنْ سَعِيْدٍ</span> (Khalid lebih terampil daripada Sa'id).",
+        "Kondisi 2 — Diberi <span class=\"ar-inline\">أَل</span>: bentuk menjadi <span class=\"ar-inline\">الْأَفْعَلُ</span>/<span class=\"ar-inline\">الْفُضْلَى</span> dan harus sesuai dengan mudzakkar/mu'annats serta tunggal/dual/jamak dari kata yang disifati.",
+        "Kondisi 3 — Idhafah (disandarkan) ke isim ma'rifah: mengikuti kata yang disandari, contoh <span class=\"ar-inline\">عَلِيٌّ أَفْضَلُ الْقَوْمِ</span> (Ali adalah yang terbaik dari kaumnya).",
+        "Kondisi 4 — Idhafah ke isim nakirah: bentuknya tetap <span class=\"ar-inline\">أَفْعَلُ</span> (mufrad mudzakkar) walau yang disifati jamak/mu'annats, contoh <span class=\"ar-inline\">فَاطِمَةُ أَفْضَلُ امْرَأَةٍ</span> (Fatimah adalah wanita terbaik).",
+      ],
+      examples: [
+        {ar:'خَالِدٌ أَمْهَرُ مِنْ سَعِيْدٍ.', id:"Khalid lebih terampil daripada Sa'id. (tajarrud + min)"},
+        {ar:'هُوَ الْأَفْضَلُ. هِيَ الْفُضْلَى.', id:'Dia (lk) yang terbaik. Dia (pr) yang terbaik. (diberi al)'},
+        {ar:'عَلِيٌّ أَفْضَلُ الْقَوْمِ.', id:'Ali adalah yang terbaik dari kaumnya. (idhafah ke ma\'rifah)'},
+        {ar:'خَالِدٌ أَفْضَلُ قَائِدٍ.', id:'Khalid adalah pemimpin terbaik. (idhafah ke nakirah)'},
+        {ar:'فَاطِمَةُ أَفْضَلُ امْرَأَةٍ.', id:'Fatimah adalah wanita terbaik. (idhafah ke nakirah)'},
+        {ar:'الْمُتَعَلِّمَاتُ أَفْضَلُ نِسَاءٍ.', id:'Para pelajar wanita adalah wanita-wanita terbaik. (idhafah ke nakirah)'},
+      ]
+    }
   },
   {
     title: "Tokoh-tokoh Besar Islam", arTitle: "عُظَمَاءُ الْإِسْلَامِ",
@@ -396,7 +500,25 @@ const DATA = [
       {ar:'أَلَّفَ كِتَابَ «الْقَانُونِ فِي الطِّبِّ» الَّذِي بَقِيَ مَرْجِعًا أَسَاسِيًّا فِي الْجَامِعَاتِ الْأُورُوبِّيَّةِ لِقُرُونٍ طَوِيلَةٍ.', id:'Beliau menulis kitab \'Al-Qanun fi At-Tibb\' yang tetap menjadi rujukan utama di universitas-universitas Eropa selama berabad-abad.'},
       {ar:'يَعُدُّهُ كَثِيرٌ مِنَ الْمُؤَرِّخِينَ أَعْظَمَ طَبِيبٍ فِي الْعُصُورِ الْوُسْطَى، وَأَكْثَرَ عُلَمَاءِ عَصْرِهِ تَأْثِيرًا فِي الْعُلُومِ الطِّبِّيَّةِ.', id:'Banyak sejarawan menganggapnya sebagai dokter terbesar di abad pertengahan, dan ilmuwan zamannya yang paling berpengaruh dalam ilmu kedokteran.'},
       {ar:'تُعَلِّمُنَا سِيرَتُهُ أَنَّ الِاجْتِهَادَ وَحُبَّ الْعِلْمِ يُمْكِنُ أَنْ يَصْنَعَا عَالِمًا يَبْقَى أَثَرُهُ خَالِدًا.', id:'Kisah hidupnya mengajarkan kita bahwa kesungguhan dan cinta ilmu dapat melahirkan seorang ilmuwan yang jejaknya abadi.'},
-    ]}
+    ]},
+    tarkib: {
+      arTitle: 'الْفِعْلُ الْمَبْنِيُّ لِلْمَعْلُوْمِ وَالْمَبْنِيُّ لِلْمَجْهُوْلِ',
+      idTitle: "Al-Fi'l al-Mabniyy li al-Ma'lūm wa al-Majhūl (Kalimat Aktif dan Pasif)",
+      definition: "<span class=\"ar-inline\">اَلْفِعْلُ الْمَبْنِيُّ لِلْمَعْلُوْمِ</span> (kalimat aktif) adalah fi'il yang pelakunya (fa'il) disebutkan dalam kalimat. <span class=\"ar-inline\">اَلْفِعْلُ الْمَبْنِيُّ لِلْمَجْهُوْلِ</span> (kalimat pasif) adalah fi'il yang fa'il-nya dibuang dan digantikan oleh objek (maf'ul bih) yang menempati posisinya, disebut <span class=\"ar-inline\">نَائِبُ الْفَاعِلِ</span> (pengganti pelaku).",
+      rules: [
+        "Fi'il madhi mabni majhul: huruf pertama diberi harakat dhammah, dan huruf sebelum akhir diberi harakat kasrah. Pola umum: <span class=\"ar-inline\">فُعِلَ</span>. Contoh: <span class=\"ar-inline\">نَصَرَ</span> (menolong) → <span class=\"ar-inline\">نُصِرَ</span> (ditolong).",
+        "Fi'il mudhari' mabni majhul: huruf pertama diberi harakat dhammah, dan huruf sebelum akhir diberi harakat fathah. Pola umum: <span class=\"ar-inline\">يُفْعَلُ</span>. Contoh: <span class=\"ar-inline\">يَدْخُلُ</span> (memasuki) → <span class=\"ar-inline\">يُدْخَلُ</span> (dimasuki).",
+        "Jika fi'il mu'tal (huruf 'illat sebelum akhir berupa alif), alif diubah menjadi ya', contoh <span class=\"ar-inline\">بَنَى</span> → <span class=\"ar-inline\">بُنِيَ</span>.",
+        "Jika fi'il berwazan tafa'ul/tafa'ala dan sejenisnya (huruf ziyadah alif+wawu), berlaku perubahan khusus, contoh <span class=\"ar-inline\">قَابَلَ</span> → <span class=\"ar-inline\">قُوْبِلَ</span>.",
+      ],
+      examples: [
+        {ar:'نَصَرَ اللهُ الْمُؤْمِنِيْنَ الْمُخْلِصِيْنَ. ← نُصِرَ الْمُؤْمِنُوْنَ الْمُخْلِصُوْنَ.', id:'Allah menolong orang-orang mukmin yang ikhlas. ← Orang-orang mukmin yang ikhlas ditolong.'},
+        {ar:'بَنَى النَّبِيُّ الْمَسْجِدَ فِي الْمَدِيْنَةِ. ← بُنِيَ الْمَسْجِدُ فِي الْمَدِيْنَةِ.', id:'Nabi membangun masjid di Madinah. ← Masjid dibangun di Madinah.'},
+        {ar:'كَتَبَ الْمُؤَرِّخُ كِتَابَ التَّارِيْخِ الْإِسْلَامِيَّةِ. ← كُتِبَ كِتَابُ التَّارِيْخِ الْإِسْلَامِيَّةِ.', id:'Sejarawan menulis buku sejarah Islam. ← Buku sejarah Islam ditulis.'},
+        {ar:'يَدْخُلُ اللُّغَوِيُّ مَرْكَزَ اللُّغَةِ الْعَرَبِيَّةِ. ← يُدْخَلُ مَرْكَزُ اللُّغَةِ الْعَرَبِيَّةِ.', id:'Ahli bahasa memasuki pusat bahasa Arab. ← Pusat bahasa Arab dimasuki.'},
+        {ar:'يُكْرِمُ الضُّيُوْفَ بِكُلِّ احْتِرَامٍ. ← يُكْرَمُ الضُّيُوْفُ بِكُلِّ احْتِرَامٍ.', id:'(Ia) memuliakan tamu dengan penuh hormat. ← Tamu-tamu dimuliakan dengan penuh hormat.'},
+      ]
+    }
   },
   {
     title: "Studi di Universitas", arTitle: "اَلدِّرَاسَةُ فِي الْجَامِعَةِ",
@@ -431,7 +553,26 @@ const DATA = [
       {ar:'تَخْتَلِفُ الْجَامِعَاتُ فِي بَرَامِجِهَا، وَلَكِنَّ الْهَدَفَ وَاحِدٌ: إِعْدَادُ جِيلٍ قَادِرٍ عَلَى الْمُسَاهَمَةِ فِي بِنَاءِ الْمُجْتَمَعِ.', id:'Universitas berbeda-beda programnya, namun tujuannya satu: mempersiapkan generasi yang mampu berkontribusi membangun masyarakat.'},
       {ar:'يَرَى كَثِيرٌ مِنَ الطُّلَّابِ أَنَّ اخْتِيَارَ التَّخَصُّصِ الْمُنَاسِبِ أَهَمُّ مِنَ اخْتِيَارِ الْجَامِعَةِ نَفْسِهَا.', id:'Banyak mahasiswa berpendapat bahwa memilih jurusan yang tepat lebih penting daripada memilih universitas itu sendiri.'},
       {ar:'كَمَا أَنَّ الْبَحْثَ الْعِلْمِيَّ وَالْمُشَارَكَةَ فِي الْأَنْشِطَةِ الطُّلَّابِيَّةِ يَجْعَلَانِ التَّجْرِبَةَ الْجَامِعِيَّةَ أَكْثَرَ ثَرَاءً وَفَائِدَةً.', id:'Penelitian ilmiah dan keikutsertaan dalam kegiatan kemahasiswaan menjadikan pengalaman kuliah lebih kaya dan bermanfaat.'},
-    ]}
+    ]},
+    tarkib: {
+      arTitle: 'الْفِعْلُ الْمُضَارِعُ الْمَرْفُوْعُ وَالْمَنْصُوْبُ وَالْمَجْزُوْمُ',
+      idTitle: "Fi'l Mudhari' Marfū', Manshūb, dan Majzūm",
+      definition: "<span class=\"ar-inline\">اَلْفِعْلُ الْمُضَارِعُ</span> adalah fi'il yang menunjukkan peristiwa yang terjadi di waktu sekarang atau akan datang, selalu diawali salah satu huruf mudhara'ah: <span class=\"ar-inline\">أ، ن، ي، ت</span>. I'rab-nya berubah menjadi rafa', nashab, atau jazm tergantung ada/tidaknya partikel yang mendahuluinya.",
+      rules: [
+        "<b>Marfū'</b> — fi'il mudhari' tidak didahului huruf nashab maupun jazm. Tandanya: harakat <span class=\"ar-inline\">ضَمَّة</span> (untuk bentuk tunggal), atau <span class=\"ar-inline\">ثُبُوْتُ النُّوْن</span> (tetapnya huruf nun) untuk bentuk dual/jamak/mukhatabah.",
+        "<b>Manshūb</b> — didahului salah satu huruf nashab: <span class=\"ar-inline\">أَنْ، لَنْ، إِذَنْ، كَيْ، لِ التَّعْلِيْل، حَتَّى</span>. Tandanya: harakat <span class=\"ar-inline\">فَتْحَة</span>, atau <span class=\"ar-inline\">حَذْفُ النُّوْن</span> (hilangnya huruf nun) untuk bentuk dual/jamak/mukhatabah.",
+        "<b>Majzūm</b> — didahului salah satu huruf jazm: <span class=\"ar-inline\">لَمْ، لَمَّا، لَامُ الْأَمْر، لَا النَّاهِيَة</span>. Tandanya: harakat <span class=\"ar-inline\">سُكُوْن</span>, atau <span class=\"ar-inline\">حَذْفُ النُّوْن</span> untuk bentuk dual/jamak/mukhatabah.",
+      ],
+      examples: [
+        {ar:'هُوَ يُسَجِّلُ فِي كُلِّيَّةِ الطِّبِّ.', id:'Dia mendaftar di fakultas kedokteran. (marfū\' — tanda dhammah)'},
+        {ar:'نَحْنُ نَسْتَعِدُّ لِلِابْتِدَاءِ قَبْلَ النَّهَارِ.', id:'Kami bersiap untuk memulai sebelum siang. (marfū\' — tanda dhammah)'},
+        {ar:'هُمَا يَدْرُسَانِ فِي الْجَامِعَةِ الْيَوْمَ.', id:'Keduanya belajar di universitas hari ini. (marfū\' — tanda tsubūt an-nūn)'},
+        {ar:'هُوَ يُرِيدُ أَنْ يُسَجِّلَ فِي كُلِّيَّةِ الطِّبِّ.', id:'Dia ingin mendaftar di fakultas kedokteran. (manshūb setelah أَنْ — tanda fathah)'},
+        {ar:'لَنْ نَسْتَعِدَّ لِلِابْتِدَاءِ قَبْلَ النَّهَارِ.', id:'Kami tidak akan bersiap sebelum siang. (manshūb setelah لَنْ — tanda fathah)'},
+        {ar:'أَنْتُمْ تَكْتُبُوْنَ الرِّسَالَةَ بِسُرْعَةٍ.', id:'Kalian menulis surat dengan cepat. (marfū\' — tanda tsubūt an-nūn)'},
+        {ar:'أَوْصَاكُمُ الْأُسْتَاذُ كَيْ تَكْتُبُوا الرِّسَالَةَ بِسُرْعَةٍ.', id:'Dosen menasihati kalian agar menulis surat dengan cepat. (manshūb setelah كَيْ — tanda hadzf an-nūn)'},
+      ]
+    }
   },
 ];
 
@@ -597,6 +738,7 @@ function renderSubtemaRail(){
   el.innerHTML = '';
   const tabs = [
     {key:'mufradat', label:'المفردات · Kosakata'},
+    {key:'tarkib', label:'التراكيب · Tarkib'},
     {key:'hiwar1', label:'الحوار ١ · Hiwar 1'},
     {key:'hiwar2', label:'الحوار ٢ · Hiwar 2'},
     {key:'qiraah', label:'القراءة · Bacaan'},
@@ -638,6 +780,54 @@ function renderContent(){
       grid.appendChild(card);
     });
     el.appendChild(grid);
+  }
+
+  if(curSub === 'tarkib'){
+    const tk = t.tarkib;
+    if(!tk){
+      el.innerHTML = '<p style="text-align:center;color:var(--ink-soft);font-size:13px;">Materi tarkib untuk unit ini belum tersedia.</p>';
+    } else {
+      const titleDiv = document.createElement('div');
+      titleDiv.className = 'tarkib-title';
+      titleDiv.innerHTML = '<div class="ar">'+tk.arTitle+'</div><div class="id">'+tk.idTitle+'</div>';
+      el.appendChild(titleDiv);
+
+      const defBlock = document.createElement('div');
+      defBlock.className = 'tarkib-block';
+      defBlock.innerHTML = '<h3>Definisi</h3><p class="tarkib-def">'+tk.definition+'</p>';
+      el.appendChild(defBlock);
+
+      const ruleBlock = document.createElement('div');
+      ruleBlock.className = 'tarkib-block';
+      ruleBlock.innerHTML = '<h3>Kaidah / Ketentuan</h3><ol class="tarkib-rules">'+
+        tk.rules.map(r => '<li>'+r+'</li>').join('') + '</ol>';
+      el.appendChild(ruleBlock);
+
+      const exBlock = document.createElement('div');
+      exBlock.className = 'tarkib-block';
+      exBlock.innerHTML = '<h3>Contoh</h3>';
+      const exList = document.createElement('div');
+      tk.examples.forEach(x => {
+        const row = document.createElement('div');
+        row.className = 'tarkib-ex-row';
+        const content = document.createElement('div');
+        content.className = 'ex-content';
+        content.innerHTML = '<div class="ar">'+x.ar+'</div><div class="id">'+x.id+'</div>';
+        const btn = document.createElement('button');
+        btn.className = 'play-btn';
+        btn.style.width = '30px';
+        btn.style.height = '30px';
+        btn.style.flexShrink = '0';
+        btn.setAttribute('aria-label','Putar contoh');
+        btn.innerHTML = '&#9656;';
+        btn.onclick = () => speak(x.ar.replace(/←/g,'.'), btn);
+        row.appendChild(content);
+        row.appendChild(btn);
+        exList.appendChild(row);
+      });
+      exBlock.appendChild(exList);
+      el.appendChild(exBlock);
+    }
   }
 
   if(curSub === 'hiwar1' || curSub === 'hiwar2'){
